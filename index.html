@@ -61,52 +61,59 @@
             z-index: 2;
         }
 
-        /* واجهة الظرف (دارك مود) */
+        /* واجهة الظرف الأوف وايت الأنيق (بيفتح تلقائي) */
         .envelope-section {
-            background: #1e1b18;
-            padding: 40px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #3d312a;
-            cursor: pointer;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 18, 18, 0.95);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            z-index: 999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .envelope-section.hide {
+            opacity: 0;
+            visibility: hidden;
         }
         .envelope {
-            background: linear-gradient(135deg, #4a3b32, #2c221c);
-            width: 260px;
-            height: 160px;
-            margin: 0 auto 15px auto;
+            background: linear-gradient(135deg, #fbf9f5, #f0ead6);
+            width: 280px;
+            height: 180px;
+            margin: 0 auto;
             border-radius: 12px;
             position: relative;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #ebdcd0;
-            border: 2px solid rgba(197, 160, 89, 0.3);
-            transition: transform 0.8s ease, opacity 0.8s ease;
+            color: #4a3b32;
+            border: 2px solid #c5a059;
+            transform-origin: top;
+            transition: transform 1s ease, opacity 0.8s ease;
         }
         .envelope-names {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             margin-bottom: 5px;
-            color: #ebdcd0;
+            color: #5c4033;
         }
         .envelope-title {
             font-size: 15px;
             font-weight: normal;
-            opacity: 0.8;
+            color: #8c6d53;
         }
         .envelope.opening {
-            transform: scale(0.9) rotateX(20deg);
+            transform: rotateX(80deg) scale(0.8);
             opacity: 0;
         }
 
-        /* محتوى الدعوة (دارك مود) */
+        /* محتوى الدعوة */
         .invitation-content {
             display: none;
             background: #1e1b18;
@@ -287,16 +294,17 @@
     <!-- القلوب المتحركة في الخلفية -->
     <div class="hearts-bg" id="heartsContainer"></div>
 
+    <!-- واجهة الظرف الأوف وايت الأنيق (تفتح تلقائياً) -->
+    <div class="envelope-section" id="lockScreen">
+        <div class="envelope" id="envelopeElement">
+            <div class="envelope-names">أحمد 💍 نورهان</div>
+            <div class="envelope-title">تفتح الدعوة الآن...</div>
+        </div>
+    </div>
+
     <div class="container">
         
-        <div class="envelope-section" id="lockScreen" onclick="openInvitation()">
-            <div class="envelope" id="envelopeElement">
-                <div class="envelope-names">أحمد 💍 نورهان</div>
-                <div class="envelope-title">كتب كتابنا</div>
-            </div>
-            <p style="color: #c5a059; font-size: 14px; font-weight: bold; margin: 0;">اضغط هنا لفتح الدعوة وتشغيل الموسيقى 💌</p>
-        </div>
-
+        <!-- محتوى الدعوة الأساسي -->
         <div class="invitation-content" id="mainContent">
             
             <div class="paper-card">
@@ -389,6 +397,28 @@
     </div>
 
     <script>
+        // فتح الظرف الأوف وايت تلقائياً بعد ثانية واحدة من فتح الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const envelope = document.getElementById('envelopeElement');
+                const lockScreen = document.getElementById('lockScreen');
+                const mainContent = document.getElementById('mainContent');
+                const audio = document.getElementById('weddingAudio');
+
+                // محاولة تشغيل الصوت (قد ينجح أو يطلبه المتصفح، وزر التشغيل جاهز في القائمة)
+                audio.play().catch(error => {
+                    console.log("Audio autoplay restricted by browser:", error);
+                });
+
+                envelope.classList.add('opening');
+                
+                setTimeout(() => {
+                    lockScreen.classList.add('hide');
+                    mainContent.classList.add('show');
+                }, 700);
+            }, 1200);
+        });
+
         // توليد القلوب المتحركة في الخلفية تلقائياً
         function createHeart() {
             const heartsContainer = document.getElementById('heartsContainer');
@@ -396,38 +426,18 @@
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             
-            // أماكن وأحجام عشوائية للقلوب
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // من 4 لـ 7 ثوانٍ
-            heart.style.fontSize = (Math.random() * 12 + 14) + 'px'; // أحجام مختلفة
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 12 + 14) + 'px';
             
             heartsContainer.appendChild(heart);
 
-            // حذف القلب بعد انتهاء الحركة عشان الذاكرة
             setTimeout(() => {
                 heart.remove();
             }, 7000);
         }
 
-        setInterval(createHeart, 400); // إنشاء قلب جديد كل شوية
-
-        function openInvitation() {
-            const envelope = document.getElementById('envelopeElement');
-            const lockScreen = document.getElementById('lockScreen');
-            const mainContent = document.getElementById('mainContent');
-            const audio = document.getElementById('weddingAudio');
-
-            audio.play().catch(error => {
-                console.log("Audio play blocked or error:", error);
-            });
-
-            envelope.classList.add('opening');
-            
-            setTimeout(() => {
-                lockScreen.style.display = 'none';
-                mainContent.classList.add('show');
-            }, 500);
-        }
+        setInterval(createHeart, 400);
 
         const weddingDate = new Date("2026-09-13T00:00:00").getTime();
 
