@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة كتب الكتاب المنتظر - أحمد ونورهان ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f7f4ef;
+            color: #4a3b32;
+            font-family: 'Cairo', sans-serif, Tahoma;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        /* واجهة الظرف الأون اللي بيفتح تلقائي */
+        .envelope-section {
+            background: #ffffff;
+            padding: 50px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid #ebdcd0;
+        }
+        .envelope {
+            background: linear-gradient(135deg, #d4bda8, #bfa48f);
+            width: 260px;
+            height: 160px;
+            margin: 0 auto;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 12px 30px rgba(140, 109, 83, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            transform-origin: top;
+            transition: transform 1s ease, opacity 0.8s ease;
+        }
+        .envelope-names {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .envelope-title {
+            font-size: 15px;
+            font-weight: normal;
+            opacity: 0.9;
+        }
+        .envelope.opening {
+            transform: rotateX(75deg) scale(0.9);
+            opacity: 0;
+        }
+        
+        /* محتوى الدعوة */
+        .invitation-content {
+            display: none;
+            background: #ffffff;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid #ebdcd0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .invitation-content.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .paper-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #ebdcd0;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .main-title {
+            font-size: 22px;
+            color: #8c6d53;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .sub-title {
+            font-size: 15px;
+            color: #a0826d;
+            margin-bottom: 20px;
+        }
+        .names {
+            font-size: 28px;
+            font-weight: bold;
+            color: #8c6d53;
+            margin: 15px 0;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .names .ring {
+            color: #c5a059;
+            font-size: 24px;
+        }
+        /* مشغل الأغنية */
+        .audio-box {
+            margin: 15px 0 20px 0;
+            background: #fdf8f5;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #ebdcd0;
+        }
+        .audio-box audio {
+            width: 100%;
+            height: 35px;
+        }
+        /* قسم الصور والخواطر */
+        .story-section {
+            margin: 25px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .story-card {
+            background: #fdf8f5;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #ebdcd0;
+        }
+        .story-card img {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ebdcd0;
+        }
+        .story-card p {
+            font-size: 14px;
+            color: #70523f;
+            line-height: 1.8;
+            margin: 0;
+        }
+        /* التاريخ والعد التنازلي */
+        .date-box {
+            background: #fdf8f5;
+            border: 1px dashed #c5a059;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #5c4033;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .countdown-card {
+            background: #fdf8f5;
+            border: 1px solid #ebdcd0;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+        .countdown-timer {
+            font-size: 15px;
+            color: #5c4033;
+            font-weight: bold;
+            direction: ltr;
+            margin-top: 5px;
+        }
+        /* الرسالة التحتية */
+        .message-text {
+            font-size: 16px;
+            color: #70523f;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+        /* بوكس التواصل */
+        .contact-box {
+            margin-top: 25px;
+            background: #f9f4f0;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #ebdcd0;
+        }
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25d366;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s;
+            margin-top: 8px;
+        }
+        .whatsapp-btn i {
+            font-size: 18px;
+        }
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+        .designer-sig {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #a0826d;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- واجهة الظرف (تفتح تلقائياً) -->
+        <div class="envelope-section" id="lockScreen">
+            <div class="envelope" id="envelopeElement">
+                <div class="envelope-names">أحمد 💍 نورهان</div>
+                <div class="envelope-title">كتب كتابنا</div>
+            </div>
+            <p style="color: #a0826d; font-size: 13px; margin-top: 20px;">جاري فتح الدعوة...</p>
+        </div>
+
+        <!-- محتوى الدعوة الأساسي -->
+        <div class="invitation-content" id="mainContent">
+            
+            <div class="paper-card">
+                <div class="main-title">دعوة كتب كتابنا</div>
+                <div class="sub-title">فرحتنا هتكمل بيييكم ❤️</div>
+                
+                <!-- الأسماء والدبلة -->
+                <div class="names">
+                    أحمد <span class="ring">💍</span> نورهان
+                </div>
+
+                <!-- الأغنية تحت الأسماء -->
+                <div class="audio-box">
+                    <audio controls loop>
+                        <source src="Wentamaaya.mp3" type="audio/mpeg">
+                        متصفحك لا يدعم تشغيل الصوت
+                    </audio>
+                </div>
+
+                <!-- الصور والخواطر بالترتيب -->
+                <div class="story-section">
+                    
+                    <div class="story-card">
+                        <img src="Screenshot_20260828.jpg" alt="صورة الدعوة">
+                        <p>
+                            كتب كتابنا و بداية رحلتنا ❤️<br>
+                            الحمد لله الذي بنعمته تتم الصالحات ♥️<br>
+                            قال تعالى : "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَات لِّقَوْمٍ يَتَفَكَّرُونَ"
+                        </p>
+                    </div>
+
+                    <div class="story-card">
+                        <img src="Screenshot_2026082854.jpg" alt="صورة الدعوة">
+                        <p>إنّ الرُوح إذا إلتقت بمَن يُشبهها ♥️ ترمّمت ، وتعافت</p>
+                    </div>
+
+                    <div class="story-card">
+                        <img src="IMG_20250608_014509_805.jpg" alt="صورة الدعوة">
+                        <p>
+                            وأنت الطريقُ، وأنت الصديقُ<br>
+                            وأنت الجهاتُ، وكل النظر..<br>
+                            سخيّ المودة، حُلو الطباع<br>
+                            حبيبُ الفؤاد، رفيقُ العمر :")
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- التاريخ -->
+                <div class="date-box">
+                    📅 الأحد، 13 سبتمبر 2026
+                </div>
+
+                <!-- العد التنازلي تحت التاريخ -->
+                <div class="countdown-card">
+                    <div style="color: #8c6d53; font-size: 14px; font-weight: bold;">باقي علي فرحتنا ❤️</div>
+                    <div class="countdown-timer" id="countdownTimer">جاري التحميل...</div>
+                </div>
+            </div>
+
+            <!-- الجملة تحت العد التنازلي -->
+            <div class="message-text">
+                وجودكم يكتمل بيه يوم فرحتنا، ننتظركم بكل الحب لتشاركونا هذه اللحظة المميزة. ❤️
+            </div>
+
+            <!-- بوكس التواصل وتأكيد الحضور -->
+            <div class="contact-box">
+                <div style="font-size: 14px; color: #8c6d53; font-weight: bold;">لو عاوزين زي دا كلموني 👇</div>
+                <a href="https://wa.me/201155852870?text=مرحباً%20أريد%20تصميم%20دعوة%20إلكترونية%20مثل%20هذه" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> تواصل عبر الواتساب
+                </a>
+            </div>
+
+            <!-- التوقيع -->
+            <div class="designer-sig">
+                تصميم Khodary
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // فتح الظرف تلقائياً بمجرد دخول الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const envelope = document.getElementById('envelopeElement');
+                const lockScreen = document.getElementById('lockScreen');
+                const mainContent = document.getElementById('mainContent');
+
+                envelope.classList.add('opening');
+                
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    mainContent.classList.add('show');
+                }, 600);
+            }, 1000);
+        });
+
+        // العد التنازلي ليوم 13 سبتمبر 2026
+        const weddingDate = new Date("2026-09-13T00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = weddingDate - now;
+
+            if (difference < 0) {
+                document.getElementById("countdownTimer").innerHTML = "تم بحمد الله زفافنا السعيد ❤️";
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("countdownTimer").innerHTML = `${days} يوم • ${hours} ساعة • ${minutes} دقيقة • ${seconds} ثانية`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+
+</body>
+</html>
